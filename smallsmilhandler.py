@@ -8,67 +8,47 @@ class SmallSMILHandler (ContentHandler):
 
     def __init__ (self):
         
-        self.root_layout = ""
-        self.region = ""
-        self.img = ""
-        self.audio = ""
-        self.textstream = ""
-        self.lista = []
+        self.dic_root_layout = {'width':"", 'height':"", 'background_color':""}
+        self.dic_region = {'id':"", 'top':"", 'bottom':"", 'left':"", 'right':""}
+        self.dic_img = {'src':"", 'region':"", 'begin':"", 'dur':""}
+        self.dic_audio = {'src':"", 'begin':"", 'dur':""}
+        self.dic_textstream = {'src':"", 'region':""}
+        self.list = []
 
-    def get_tags(self, name, attrs):
+    def startElement(self, name, attrs):
 
         if name == "root_layout":
-            self.width = attrs.get('width')
-            print(self.root_layout)
-
-            self.height = attrs.get('height', "")
-            print(self.root_layout)
-
-            self.background_color = attrs.get('background_color', "")
-            print(self.background_color)
+            self.dicc_root_layout['width'] = attrs.get('width', "")
+            self.dicc_root_layout['height'] = attrs.get('height', "")
+            self.dicc_root_layout['background_color'] = attrs.get('background_color', "")
+            self.list.append(self.dic_root_layout)
 
         elif name == "region":
-            self.id = attrs.get('id', "")
-            print(self.region)
-
-            self.top = attrs.get('top', "")
-            print(self.region)
-
-            self.left = attrs.get('left', "")
-            print(self.region)
-
-            self.right = attrs.get('right', "")
-            print(self.right)
+            self.dic_region['id'] = attrs.get('id', "")
+            self.dic_region['top'] = attrs.get('top', "")
+            self.dic_region['bottom'] = attrs.get('bottom', "")
+            self.list.append(self.dic_region)
 
         elif name == "img":
-            self.src = attrs.get('src', "")
-            print(self.src)
-
-            self.region = attrs.get('region', "")
-            print(self.region)
-
-            self.begin = attrs.get('begin', "")
-            print(self.begin)
-
-            self.dur = attrs.get('dur', "")
-            print(self.dur)
+            self.dic_img['src'] = attrs.get('src', "")
+            self.dic_img['region'] = attrs.get('region', "")
+            self.dic_img['begin'] = attrs.get('begin', "")
+            self.dic_img['dur'] = attrs.get('dur', "")
+            self.list.append(self.dic_img)
 
         elif name == "audio":
-            self.src = attrs.get('src', "")
-            print(self.src)
-
-            self.begin = attrs.get('begin', "")
-            print(self.begin)
-
-            self.dur = attrs.get('dur', "")
-            print(self.dur)
+            self.dic_audio['src'] = attrs.get('src', "")
+            self.dic_audio['begin'] = attrs.get('begin', "")
+            self.dic_audio['dur'] = attrs.get('dur', "")
+            self.list.append(self.dic_audio)
 
         elif name == "textstream":
-            self.src = attrs.get('src', "")
-            print(self.src)
+            self.dic_textstream['src'] = attrs.get('src', "")
+            self.dic_textstream['region'] = attrs.get('region', "")
+            self.list.append(self.dic_textstream)
 
-            self.region = attrs.get('region', "")
-            print(self.region)
+    def get_tags(self):
+        return(self.list)
 
 if __name__ == "__main__":
     """
@@ -78,4 +58,4 @@ if __name__ == "__main__":
     cHandler = SmallSMILHandler()
     parser.setContentHandler(cHandler)
     parser.parse(open('karaoke.smil'))
-    print(cHandler.root_layout)
+    print(cHandler.list)
