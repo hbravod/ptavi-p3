@@ -6,15 +6,24 @@ from xml.sax import make_parser
 from xml.sax.handler import ContentHandler
 from smallsmilhandler import SmallSMILHandler
 
-if len(sys.argv) != 2:
-    sys.exit("Usage: python3 karaoke.py file.smil.") 
 
 if __name__ == "__main__":
-    """
-    Programa principal
-    """
+
     parser = make_parser()
     cHandler = SmallSMILHandler()
     parser.setContentHandler(cHandler)
-    parser.parse(open('karaoke.smil'))
-    print(cHandler.list)
+
+    try:
+        parser.parse(open(sys.argv[1]))
+    except SyntaxError:
+        print("Usage: python3 karaoke.py file.smil") 
+
+    lista = cHandler.get_tags()
+
+    for labelsD in lista:
+        print(labelsD['name'], "\t")
+        for atributo in labelsD:
+            if labelsD[atributo] != "" and atributo != 'name':
+                print(atributo, "=", labelsD[atributo])
+            else:
+                pass
