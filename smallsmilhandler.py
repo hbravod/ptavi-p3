@@ -14,7 +14,8 @@ class SmallSMILHandler(ContentHandler):
                        'region': ['id', 'top', 'bottom'],
                        'img': ['src', 'region', 'begin', 'dur'],
                        'audio': ['src', 'begin', 'dur'],
-                       'textstream': ['src', 'region']}
+                       'textstream': ['src', 'region']
+                       }
 
     def startElement(self, name, attrs):
 
@@ -30,9 +31,7 @@ class SmallSMILHandler(ContentHandler):
         return(self.list)
 
 if __name__ == "__main__":
-    """
-    Programa principal
-    """
+
     parser = make_parser()
     cHandler = SmallSMILHandler()
     parser.setContentHandler(cHandler)
