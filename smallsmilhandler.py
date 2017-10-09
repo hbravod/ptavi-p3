@@ -10,7 +10,7 @@ class SmallSMILHandler(ContentHandler):
     def __init__(self):
 
         self.list = []
-        self.labels = {'root-layout': ['width', 'height', 'backgroundcolour'],
+        self.labels = {'root-layout': ['width', 'height', 'backgroundcolor'],
                        'region': ['id', 'top', 'bottom'],
                        'img': ['src', 'region', 'begin', 'dur'],
                        'audio': ['src', 'begin', 'dur'],
