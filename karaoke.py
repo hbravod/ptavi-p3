@@ -9,21 +9,25 @@ from xml.sax.handler import ContentHandler
 from smallsmilhandler import SmallSMILHandler
 
 
-if __name__ == "__main__":
+class KaraokeLocal():
 
-    parser = make_parser()
-    cHandler = SmallSMILHandler()
-    parser.setContentHandler(cHandler)
+    def Inicializador(SmallSMILHandler):
+        lista = cHandler.get_tags()
 
-    try:
-        parser.parse(open(sys.argv[1]))
-    except SyntaxError:
-        print("Usage: python3 karaoke.py file.smil")
+    def __str__(self):
+        for labelsD in lista:
+            print(labelsD['name'], "\t",)
+        for atributo in labelsD:
+            if labelsD[atributo] != "" and atributo != 'name':
+                print(atributo, "=", '"', labelsD[atributo], '"')
 
-    lista = cHandler.get_tags()
+    def to_json(self):
+        with open('karaoke.json', 'w') as outfile:
+            json.dump(lista, outfile)
 
-    for labelsD in lista:
-        print(labelsD['name'], "\t",)
+    def do_local(self):
+        for labelsD in lista:
+            print(labelsD['name'], "\t",)
         for atributo in labelsD:
             if labelsD[atributo][0:7] == "http://":
                 atributolargo = labelsD[atributo]
@@ -33,5 +37,13 @@ if __name__ == "__main__":
             if labelsD[atributo] != "" and atributo != 'name':
                 print(atributo, "=", '"', labelsD[atributo], '"')
 
-    with open('karaoke.json', 'w') as outfile:
-        json.dump(lista, outfile)
+if __name__ == "__main__":
+
+    parser = make_parser()
+    cHandler = KaraokeLocal()
+    parser.setContentHandler(cHandler)
+
+    try:
+        parser.parse(open(sys.argv[1]))
+    except SyntaxError:
+        print("Usage: python3 karaoke.py file.smil")
