@@ -2,6 +2,7 @@
 # -*- coding: utf-8 -*-
 
 import sys
+import json
 from xml.sax import make_parser
 from xml.sax.handler import ContentHandler
 from smallsmilhandler import SmallSMILHandler
@@ -21,9 +22,10 @@ if __name__ == "__main__":
     lista = cHandler.get_tags()
 
     for labelsD in lista:
-        print(labelsD['name'], "\t")
+        print(labelsD['name'], "\t",)
         for atributo in labelsD:
             if labelsD[atributo] != "" and atributo != 'name':
-                print(atributo, "=", labelsD[atributo])
-            else:
-                pass
+                print(atributo, "=", '"', labelsD[atributo], '"')
+
+    with open('karaoke.json', 'w') as outfile:
+        json.dump(lista, outfile)
