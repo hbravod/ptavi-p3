@@ -17,7 +17,7 @@ if __name__ == "__main__":
     try:
         parser.parse(open(sys.argv[1]))
     except SyntaxError:
-        print("Usage: python3 karaoke.py file.smil") 
+        print("Usage: python3 karaoke.py file.smil")
 
     lista = cHandler.get_tags()
 
