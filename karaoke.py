@@ -3,6 +3,7 @@
 
 import sys
 import json
+import urllib.request
 from xml.sax import make_parser
 from xml.sax.handler import ContentHandler
 from smallsmilhandler import SmallSMILHandler
@@ -24,6 +25,11 @@ if __name__ == "__main__":
     for labelsD in lista:
         print(labelsD['name'], "\t",)
         for atributo in labelsD:
+            if labelsD[atributo][0:7] == "http://":
+                atributolargo = labelsD[atributo]
+                atributocorto = labelsD[atributo].split('/')[-1]
+                urllib.request.urlretrieve(atributolargo, atributocorto)
+                labelsD[atributo] = atributocorto
             if labelsD[atributo] != "" and atributo != 'name':
                 print(atributo, "=", '"', labelsD[atributo], '"')
 
